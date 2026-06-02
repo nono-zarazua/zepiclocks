@@ -1,0 +1,6 @@
+*
+!*/
+!*.py
+!*.sh
+!.gitignore
+pyaging_data/
