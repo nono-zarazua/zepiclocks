@@ -26,18 +26,23 @@ pheno_cpgs = set(df_pheno['CpG'].dropna())
 df_dunedin = pd.read_csv('dunedinpace_173_weights.csv')
 dunedin_cpgs = set(df_dunedin['CpG'].dropna())
 
-# 4. Unify the sets
-all_cpgs = horvath_cpgs.union(pheno_cpgs).union(dunedin_cpgs)
+# 4. Parse PhysAge
+df_physage = pd.read_csv('physage_cpgs.txt',sep=' ')
+physage_cpgs = set(df_physage['cpg'].dropna())
 
-# 5. Filter out the Intercept rows (catches both "Intercept" and "(Intercept)")
+# 5. Unify the sets
+all_cpgs = horvath_cpgs.union(pheno_cpgs).union(dunedin_cpgs).union(physage_cpgs)
+
+# 6. Filter out the Intercept rows (catches both "Intercept" and "(Intercept)")
 clean_cpgs = {cpg for cpg in all_cpgs if 'Intercept' not in str(cpg)}
 
 print(f"Horvath sites: {len(horvath_cpgs) - 1}") # -1 for intercept
 print(f"PhenoAge sites: {len(pheno_cpgs) - 1}")
 print(f"DunedinPACE sites: {len(dunedin_cpgs) - 1}")
+print(f"PhysAge sites: {len(physage_cpgs) - 1}")
 print(f"Total unique clock CpGs for ReadFish: {len(clean_cpgs)}")
 
-# 6. Find Anchor genes using Zhou's Gencode file
+# 7. Find Anchor genes using Zhou's Gencode file
 print(f"Reading {zhou_gencode} and searching for Anchor Genes...\n")
 df_gencode = pd.read_csv(zhou_gencode, sep="\t", compression="gzip")
 anchor_mask = df_gencode['geneNames'].fillna('').apply(
@@ -47,7 +52,7 @@ df_anchors = df_gencode[anchor_mask]['probeID']
 anchor_cpgs = set(df_anchors)
 print(f"Found {len(anchor_cpgs)} CpGs associated with {anchor_genes}\n")
 
-# 7. Merge Clock targets with Quality Control Anchors
+# 8. Merge Clock targets with Quality Control Anchors
 print("Loading Coordinates and matching legacy IDs...\n")
 df_manifest = pd.read_csv(zhou_manifest, sep="\t", compression="gzip")
 
@@ -66,7 +71,7 @@ df_targets = df_targets[
     (df_targets['mapQ_B'].isna() | (df_targets['mapQ_B'] == 60))
 ].copy()
 
-# 8. Apply the Latino MAF > 1% / Repetitive Mask
+# 9. Apply the Latino MAF > 1% / Repetitive Mask
 print("🛡️ Applying strict population SNP and repetitive masking...")
 df_mask = pd.read_csv(zhou_mask, sep="\t", compression="gzip")
 
@@ -79,7 +84,7 @@ df_final = df_targets[~df_targets['Probe_ID'].isin(bad_probes)].copy()
 
 print(f"   Excluded {len(df_targets) - len(df_final)} problematic positions.")
 
-# 9. Generate and format standard BED file
+# 10. Generate and format standard BED file
 print("Formatting final target BED file...\n")
 df_bed = df_final[['CpG_chrm', 'CpG_beg', 'CpG_end', 'Probe_ID']].copy()
 
