@@ -96,5 +96,9 @@ df_bed = df_bed.drop(columns=['chrom_clean'])
 # Sort chronologically by position
 df_bed = df_bed.sort_values(by=['CpG_chrm', 'CpG_beg'])
 
+df_bed['CpG_beg'] = df_bed['CpG_beg'].astype(int)
+df_bed['CpG_end'] = df_bed['CpG_end'].astype(int)
+
+
 df_bed.to_csv(OUTPUT_BED, sep='\t', header=False, index=False)
 print(f"\nSUCCESS! Clean ReadFish BED file generated: {OUTPUT_BED} ({len(df_bed)} positions)")
