@@ -1,0 +1,12 @@
+name: epiclock_env
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python=3.10
+  - pandas=2.1.0
+  - bedtools=2.31.0
+  - pip
+  - pip:
+      - pyaging==0.1.30
