@@ -7,7 +7,7 @@ import sys
 zhou_gencode = 'EPICv2.hg38.manifest.gencode.v41.tsv.gz'
 zhou_manifest = 'EPICv2.hg38.manifest.tsv.gz'
 zhou_mask = 'EPICv2.hg38.mask.tsv.gz'
-OUTPUT_BED = 'panel_targeted_cpgs.bed'
+OUTPUT_BED = 'panel_exact_cpgs.bed'
 
 valid_chroms = [str(i) for i in range(1,23)] + ['X','Y','M']
 anchor_genes = ['ELOVL2','FHL2','PENK']
