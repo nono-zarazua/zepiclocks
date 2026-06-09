@@ -16,7 +16,7 @@ Zepiclocks is an automated pipeline that extracts, unifies, and runs quality con
 
 ## 🛠️ 1. Prepare Conda Environment
 
-Before running the pipeline, make sure the conda is [installed](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html). 
+Before running the pipeline, make sure conda is [installed](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html). 
 
 To set up the necessary environment and data, run:
 
