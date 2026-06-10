@@ -2,6 +2,6 @@
 !*/
 !*.py
 !*.sh
-!*.bed
+*.bed
 !.gitignore
 pyaging_data/
