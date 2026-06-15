@@ -102,3 +102,4 @@ df_bed['CpG_end'] = df_bed['CpG_end'].astype(int)
 
 df_bed.to_csv(OUTPUT_BED, sep='\t', header=False, index=False)
 print(f"\nSUCCESS! Clean ReadFish BED file generated: {OUTPUT_BED} ({len(df_bed)} positions)")
+
